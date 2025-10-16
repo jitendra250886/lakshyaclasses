@@ -1,0 +1,25 @@
+# === site.db ===
+# This is your SQLite database file used by SQLAlchemy in development mode.
+# It stores all persistent data for your LakshyaClasses project, including:
+# - User accounts (from models/user.py)
+# - Student profiles (from models/student.py)
+# - Course purchases (from models/purchase.py)
+# - Any future tables like submissions, quizzes, or progress tracking
+
+# === How It's Created ===
+# This file is auto-generated and managed by SQLAlchemy + Flask-Migrate.
+# You should NOT manually edit or open this file directly.
+# To initialize and manage the database schema, use:
+#   flask db init
+#   flask db migrate -m "Initial migration"
+#   flask db upgrade
+
+# === Best Practices ===
+# - Keep site.db inside the /instance folder (Flask convention)
+# - Add site.db to .gitignore to avoid committing local data
+# - Use flask shell or DB Browser for SQLite to inspect contents
+# - For production, consider switching to PostgreSQL or MySQL
+
+# === Migration & Inspection Support ===
+# Let me know if you want help writing migration scripts,
+# inspecting tables, or switching to a cloud database later.

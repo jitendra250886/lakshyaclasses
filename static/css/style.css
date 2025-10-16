@@ -1,0 +1,22 @@
+/* static/css/style.css */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h4 {
+    font-weight: 600;
+}
+
+.hero {
+    background-image: linear-gradient(to right, #007bff, #00c6ff);
+    color: white;
+    padding: 60px 0;
+}
+
+footer {
+    font-size: 0.9rem;
+}
