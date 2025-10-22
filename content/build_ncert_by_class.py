@@ -7,13 +7,9 @@ GOAL & LAYOUT (MANDATORY)
 • The workbook must contain exactly 12 worksheets, one per class, named: “Class 01”, “Class 02”, …, “Class 12”.
 • Each worksheet must contain a SINGLE Excel Table with the columns, in this exact order:
   1) Subject
-  2) Chapter_Index
+  2) Chapter Index
   3) Status
-  4) Language  
-  5) Depth	 
-  6) Diagrams 
-  7) Mermaid_Concept_Map  
-  8) Prompt
+  4) Remark
 • Each row represents one subject of that class.
 • Column “Chapter Index” must contain a **newline‑separated** list of chapter slugs in the format:
   CHAPTER-XX-TITLE-WITH-HYPHENS
@@ -23,7 +19,7 @@ GOAL & LAYOUT (MANDATORY)
   - English titles: keep A–Z, 0–9; spaces → hyphens; uppercase; strip punctuation.
   - Hindi titles: **keep Devanagari characters**, convert spaces/punctuation to hyphens; do NOT transliterate; no uppercase conversion.
 • Column “Status” must be a data‑validation dropdown with exactly three values:
-  [Not_start, working, complete]
+  Not_start, working, complete
 • Column “Remark” is free text.
 
 ========================
@@ -98,7 +94,7 @@ EXTENSIBILITY HOOKS
 ACCEPTANCE CHECKLIST
 ========================
 - [ ] Workbook has 12 sheets: “Class 01” … “Class 12”.
-- [ ] Each sheet has ONE table with columns: Subject	Chapter_Index	Status	Language  Depth	 Diagrams Mermaid_Concept_Map  Prompt.
+- [ ] Each sheet has ONE table with columns: Subject | Chapter Index | Status | Remark.
 - [ ] “Chapter Index” contains newline-separated CHAPTER-XX-TITLE-WITH-HYPHENS slugs.
 - [ ] Hindi chapter slugs keep Devanagari; English slugs are UPPER-HYPHENATED.
 - [ ] Status column has dropdown: Not_start, working, complete.
@@ -132,7 +128,7 @@ python build_ncert_by_class_full.py --out "C:\Temp" --file NCERT_Classes.xlsx
 #
 # Creates one worksheet per class (Class 01 .. Class 12)
 # Each sheet has ONE Excel Table with columns:
-#   Subject	Chapter_Index	Status	Language  Depth	 Diagrams Mermaid_Concept_Map  Prompt
+#   Subject | Chapter Index | Status | Remark
 # - Chapter Index is newline-separated "CHAPTER-XX-TITLE-WITH-HYPHENS"
 # - Status has dropdown: Not_start, working, complete
 # - Styling: bold header, fill, freeze header, wrap text (Chapter Index), auto-widths, table style
@@ -1208,7 +1204,6 @@ CURRICULUM: Dict[str, Dict[str, List[str]]] = {
 from openpyxl.styles import Border, Side
 from openpyxl.utils import range_boundaries
 
-
 def _merge_border(cell, *, top=None, bottom=None, left=None, right=None):
     """Preserve any existing cell borders; replace only sides you pass in."""
     cell.border = Border(
@@ -1471,7 +1466,7 @@ def build_class_sheet(
 ):
     """
     Create one worksheet for a class with a single table:
-    Subject	Chapter_Index	Status	Language  Depth	 Diagrams Mermaid_Concept_Map  Prompt
+    Subject | Chapter Index | Status | Remark
 
     This version writes ONE ROW PER CHAPTER.
     Column A repeats the subject for each chapter row.
@@ -1485,9 +1480,7 @@ def build_class_sheet(
     ws = wb.create_sheet(title=sheet_title)
 
     # ---- Header ----
-    headers = ["Subject", "Chapter_Index", "Status", 
-               "Language", "Depth", "Diagrams", 
-               "Mermaid_Concept_Map", "Prompt"]
+    headers = ["Subject", "Chapter Index", "Status", "Remark"]
     ws.append(headers)
 
     # ---- Rows: one row per chapter ----
@@ -1499,7 +1492,7 @@ def build_class_sheet(
                 for idx, raw in enumerate(chapters, start=1):
                     num, title = parse_chapter(raw, idx)       # uses existing helper
                     md = to_md_slug(num, title)                 # CHAPTER-XX-... (existing helper)
-                    ws.append([subject, md, "Not_start", "English", "Medium", "", "", ""])
+                    ws.append([subject, md, "Not_start", ""])
                     rows_added += 1
             else:
                 # Subject exists but no chapters -> single placeholder row
@@ -1524,22 +1517,16 @@ def build_class_sheet(
     for r in range(2, ws.max_row + 1):
         ws.cell(row=r, column=1).alignment = Alignment(wrap_text=True, vertical="top")  # Subject
         ws.cell(row=r, column=2).alignment = Alignment(wrap_text=True, vertical="top")  # Chapter Index
-        
-        for r in range(2, ws.max_row + 1):
-            status_cell = ws.cell(row=r, column=3)   # Column C = Status
-            language_cell = ws.cell(row=r, column=4) # Column D = Language
-            depth_cell = ws.cell(row=r, column=5)    # Column E = Depth
-            
-            if not status_cell.value:
-                status_cell.value = "Not_start"
-            status_cell.alignment = Alignment(horizontal="center", vertical="top")
-            if not language_cell.value:
-                language_cell.value = "English"
-            language_cell.alignment = Alignment(horizontal="center", vertical="top")
-            if not depth_cell.value:
-                depth_cell.value = "Medium"
-            depth_cell.alignment = Alignment(horizontal="center", vertical="top")
-            
+
+
+    # Ensure Status = Not_start and align to top-middle for every data row
+    for r in range(2, ws.max_row + 1):
+        status_cell = ws.cell(row=r, column=3)  # Column C = Status
+        if not status_cell.value:
+            status_cell.value = "Not_start"
+        status_cell.alignment = Alignment(horizontal="center", vertical="top")
+
+
     # Freeze header
     ws.freeze_panes = "A2"
 
@@ -1600,13 +1587,10 @@ def build_class_sheet(
 
     # ---- Column widths (narrower Chapter Index, still wrapped) ----
     ws.column_dimensions['A'].width = 12  # Subject
-    ws.column_dimensions['B'].width = 52  # Chapter_Index (smaller; each row has one slug)
+    ws.column_dimensions['B'].width = 52  # Chapter Index (smaller; each row has one slug)
     ws.column_dimensions['C'].width = 14  # Status
-    ws.column_dimensions['D'].width = 14  # Language
-    ws.column_dimensions['E'].width = 12  # Depth
-    ws.column_dimensions['F'].width = 18  # Diagrams
-    ws.column_dimensions['G'].width = 24  # Mermaid_Concept_Map
-    ws.column_dimensions['H'].width = 1124  # Prompt
+    ws.column_dimensions['D'].width = 54  # Remark
+
 
 
     from openpyxl.styles import PatternFill
