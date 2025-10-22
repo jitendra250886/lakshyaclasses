@@ -1,0 +1,18 @@
+# 11. New Empires And Kingdoms
+
+You are a subject-matter expert creating structured notes for Class 6 - SocialScience_History.
+
+## Chapter Overview
+- Title: New Empires And Kingdoms
+- Class: 6
+- Subject: SocialScience_History
+- Language: English
+- Depth: Standard school level
+
+## Sources
+- NCERT PDF: https://ncert.nic.in/textbook/pdf/sesc0611.pdf
+- Byju's: https://byjus.com/ncert-solutions-class-6-socialscience_history/chapter-11-new-empires-and-kingdoms/
+- YouTube: https://www.youtube.com/results?search_query=new-empires-and-kingdoms+class+6+socialscience_history
+
+## Content
+(Write detailed explanation here)

@@ -1,0 +1,18 @@
+# 5. Glimpses Of India
+
+You are a subject-matter expert creating structured notes for Class 10 - English.
+
+## Chapter Overview
+- Title: Glimpses Of India
+- Class: 10
+- Subject: English
+- Language: English
+- Depth: Standard school level
+
+## Sources
+- NCERT PDF: https://ncert.nic.in/textbook/pdf/eesc1005.pdf
+- Byju's: https://byjus.com/ncert-solutions-class-10-english/chapter-5-glimpses-of-india/
+- YouTube: https://www.youtube.com/results?search_query=glimpses-of-india+class+10+english
+
+## Content
+(Write detailed explanation here)

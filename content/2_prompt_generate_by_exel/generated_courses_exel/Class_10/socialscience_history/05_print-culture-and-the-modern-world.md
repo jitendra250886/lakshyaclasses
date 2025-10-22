@@ -1,0 +1,18 @@
+# 5. Print Culture And The Modern World
+
+You are a subject-matter expert creating structured notes for Class 10 - SocialScience_History.
+
+## Chapter Overview
+- Title: Print Culture And The Modern World
+- Class: 10
+- Subject: SocialScience_History
+- Language: English
+- Depth: Standard school level
+
+## Sources
+- NCERT PDF: https://ncert.nic.in/textbook/pdf/sesc1005.pdf
+- Byju's: https://byjus.com/ncert-solutions-class-10-socialscience_history/chapter-5-print-culture-and-the-modern-world/
+- YouTube: https://www.youtube.com/results?search_query=print-culture-and-the-modern-world+class+10+socialscience_history
+
+## Content
+(Write detailed explanation here)

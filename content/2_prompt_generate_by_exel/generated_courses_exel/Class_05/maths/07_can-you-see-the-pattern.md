@@ -1,0 +1,18 @@
+# 7. Can You See The Pattern
+
+You are a subject-matter expert creating structured notes for Class 5 - Maths.
+
+## Chapter Overview
+- Title: Can You See The Pattern
+- Class: 5
+- Subject: Maths
+- Language: English
+- Depth: Standard school level
+
+## Sources
+- NCERT PDF: https://ncert.nic.in/textbook/pdf/mesc0507.pdf
+- Byju's: https://byjus.com/ncert-solutions-class-5-maths/chapter-7-can-you-see-the-pattern/
+- YouTube: https://www.youtube.com/results?search_query=can-you-see-the-pattern+class+5+maths
+
+## Content
+(Write detailed explanation here)

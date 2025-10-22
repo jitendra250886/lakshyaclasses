@@ -1,0 +1,18 @@
+# 2. Long And Short
+
+You are a subject-matter expert creating structured notes for Class 4 - Maths.
+
+## Chapter Overview
+- Title: Long And Short
+- Class: 4
+- Subject: Maths
+- Language: English
+- Depth: Standard school level
+
+## Sources
+- NCERT PDF: https://ncert.nic.in/textbook/pdf/mesc0402.pdf
+- Byju's: https://byjus.com/ncert-solutions-class-4-maths/chapter-2-long-and-short/
+- YouTube: https://www.youtube.com/results?search_query=long-and-short+class+4+maths
+
+## Content
+(Write detailed explanation here)
