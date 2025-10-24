@@ -144,7 +144,11 @@ def main() -> None:
     for class_dir in sorted(INPUT_BASE.iterdir()):
         if not class_dir.is_dir():
             continue
+    
         print(f"\nProcessing class: {class_dir.name}")
+        # Only process subjects if the class is 'class7'
+        if class_dir.name.lower() != "class_07":
+            continue
 
         for subject_dir in sorted(class_dir.iterdir()):
             if not subject_dir.is_dir():
