@@ -28,7 +28,26 @@ from google import genai
 from google.genai import types
 
 
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+
 # ---------- Configuration ----------
+current_path = Path.cwd() # Get current working directory
+parts = current_path.parts
+if "lakshyaclasses" in parts:
+    index = parts.index("lakshyaclasses")
+    lakshya_path = Path(*parts[:index + 1])
+    os.environ["LAKSHYA_PATH"] = str(lakshya_path)
+else:
+    os.environ["LAKSHYA_PATH"] = str(current_path)  # fallback
+# Set other environment variables
+# os.environ["GEMINI_MODEL"] = "gemini-2.5-flash"
+os.environ["GEMINI_MODEL"] = "gemini-2.5-pro"
+os.environ["GEMINI_API_KEY"] = "AIzaSyDH3Eqm-hgSf9DDUUr15G1uHSS6RI-aGmQ"
+# Print all three in one line
+print(f'LAKSHYA_PATH: {os.environ["LAKSHYA_PATH"]} | GEMINI_MODEL: {os.environ["GEMINI_MODEL"]} | GEMINI_API_KEY: {os.environ["GEMINI_API_KEY"]}')
 
 # Required project root
 try:
@@ -140,12 +159,15 @@ def main() -> None:
     if not INPUT_BASE.exists():
         raise SystemExit(f"ERROR: Input path does not exist: {INPUT_BASE}")
 
+    # unique_filtered = get_generated_files()
+    unique_filtered = collect_files_with_underscored_path()
+    
     # Traverse: Class -> Subject -> *.md prompts
     for class_dir in sorted(INPUT_BASE.iterdir()):
         if not class_dir.is_dir():
             continue
     
-        print(f"\nProcessing class: {class_dir.name}")
+        # print(f"\nProcessing class: {class_dir.name}")
         # Only process subjects if the class is 'class7'
         if class_dir.name.lower() != "class_07":
             continue
@@ -153,7 +175,7 @@ def main() -> None:
         for subject_dir in sorted(class_dir.iterdir()):
             if not subject_dir.is_dir():
                 continue
-            print(f"  Subject: {subject_dir.name}")
+            # print(f"  Subject: {subject_dir.name}")
 
             md_files = sorted(subject_dir.glob("*.md"))
             if not md_files:
@@ -161,7 +183,19 @@ def main() -> None:
                 continue
 
             for prompt_file in md_files:
-                print(f"    Reading file: {prompt_file.name}")
+                # print(f"    Reading file: {prompt_file.name}")
+                filename = prompt_file.name.lower()                
+                relative_path = os.path.relpath(prompt_file, ".")
+                underscored_path = relative_path.replace(os.sep, "_").lower()
+                # Skip if already generated
+                # if underscored_path in unique_filtered:
+                # if any(existing in underscored_path for existing in unique_filtered):
+                if any(existing.lower() in underscored_path for existing in unique_filtered):
+                    print(f"    Skipped (already generated): {underscored_path.split("_exel_generated_courses_exel_")[1]}")
+                    continue
+                else :
+                    print(f"   Reading file: {underscored_path.split("_exel_generated_courses_exel_")[1]}")
+                
                 try:
                     with open(prompt_file, "r", encoding="utf-8") as f:
                         prompt = f.read().strip()
@@ -185,9 +219,30 @@ def main() -> None:
 
                 except Exception as e:
                     print(f"    Error processing {prompt_file.name}: {e}")
-
+                    print(f" In Reading file: {underscored_path.split("_exel_generated_courses_exel_")[1]}")
+                    # print(f"   In file : {underscored_path}")
+                    return
+                
     print("\nAll prompts processed and responses saved in structured output folder.")
 
+def collect_files_with_underscored_path(base_dir="."):
+    import re
+    file_list = []
+    pattern = re.compile(r'^\d\d_.*\.md$', re.IGNORECASE)
+
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            file_lower = file.lower()
+            if not pattern.match(file_lower):
+                continue
+            full_path = os.path.join(root, file_lower)
+            relative_path = os.path.relpath(full_path, base_dir)
+            underscored_path = relative_path.replace(os.sep, "_")
+            file_list.append(underscored_path)
+
+    # print(file_list)
+    print("collect_files_with_underscored_path:Number of files:  ", len(file_list))
+    return file_list
 
 if __name__ == "__main__":
     try:
