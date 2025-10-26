@@ -13,7 +13,7 @@ from models.student import Student
 from models.purchase import Purchase
 from uploads import get_all_submissions  # hypothetical helper
 from services.markdown_renderer import render_markdown  # optional for preview
-from instance import site_db  # assuming db is initialized here
+# from instance import site_db  # assuming db is initialized here
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 

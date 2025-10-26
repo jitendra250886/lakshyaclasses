@@ -3,7 +3,10 @@ from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.user import User
 from forms.student_form import RegistrationForm, LoginForm
-from instance import site_db
+from app.extensions import db
+from models.user import User   # if not already imported
+# from models.student import Student  # import as needed
+
 from . import auth_bp
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -22,8 +25,8 @@ def register():
             password=hashed_password,
             is_admin=False
         )
-        site_db.session.add(new_user)
-        site_db.session.commit()
+        db.session.add(new_user)
+        db.session.commit()
         flash("Registration successful. Please log in.", "success")
         return redirect(url_for('auth.login'))
     return render_template('register.html', form=form)

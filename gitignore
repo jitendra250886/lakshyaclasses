@@ -1,0 +1,45 @@
+# Purpose: Keep secrets, caches, venvs and junk out of Git. It will exclude instance/.env and SQLite dbs so you don’t leak secrets or commit local DBs.
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tooling
+.pytest_cache/
+.coverage
+.coverage.*
+.mypy_cache/
+.ruff_cache/
+
+# Instance data & secrets
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
+instance/.env
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Node (if any frontend build later)
+node_modules/
+dist/
+build/
+
+# Optional: if large auto-downloaded assets shouldn't be in Git, uncomment:
+# content/NCERT book auto download/
+# content/3_course_generate_by_prompt/generated_courses_exel/
